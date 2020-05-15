@@ -85,42 +85,107 @@
   style="text-align:center">
   </el-pagination>
 
-  <el-dialog title="新开设课程" :visible.sync="dialogFormVisible" close-on-click-modal=false width="30%">
+  <el-dialog title="新增学生档案" :visible.sync="dialogFormVisible" close-on-click-modal=false width="60%">
   <el-form :model="form">
-    <el-form-item label="课程名称" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="开设院校" :label-width="formLabelWidth">
-      <el-select v-model="form.dept" placeholder="请选择">
-      <el-option
-          v-for="item in deptOptions"
-          :key="item.dept"
-          :label="item.label"
-          :value="item.dept">
-          </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="课程类别" :label-width="formLabelWidth">
-      <el-select v-model="form.type" placeholder="请选择">
-        <el-option label="专业必修" value="pro_com"></el-option>
-        <el-option label="专业选修" value="pro_ele"></el-option>
-        <el-option label="通识必修" value="gen_com"></el-option>
-        <el-option label="通识选修" value="gen_ele"></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item>
       <el-col :span="12">
-        <el-form-item label="学时" :label-width="formLabelWidth">
-          <el-input v-model="form.hours" type="number" autocomplete="off"></el-input>
+        <el-form-item label="学号" :label-width="formLabelWidth">
+          <el-input v-model="form.id" autocomplete="off"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="学分" :label-width="formLabelWidth" >
-          <el-input v-model="form.credit" type="number" autocomplete="off"></el-input>
+        <el-form-item label="姓名" :label-width="formLabelWidth" >
+          <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
       </el-col>
     </el-form-item>
-    </el-form>
+    <el-form-item>
+      <el-col :span="10">
+        <el-form-item label="性别" :label-width="formLabelWidth">
+          <el-select v-model="form.sex" placeholder="请选择">
+            <el-option label="男" value="m"></el-option>
+            <el-option label="女" value="f"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="14">
+        <el-form-item label="毕业院校" :label-width="formLabelWidth" >
+          <el-input v-model="form.graduate" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-form-item>
+    <el-form-item>
+      <el-col :span="10">
+        <div class="block">
+          <span class="demonstration">出生日期</span>
+          <el-date-picker
+            v-model="form.birth"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="14">
+        <el-form-item label="身份证号" :label-width="formLabelWidth" >
+          <el-input v-model="form.idCard" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-form-item>
+    <el-form-item>
+      <el-col :span="10">
+        <el-form-item label="政治面貌" :label-width="formLabelWidth">
+          <el-select v-model="form.political" placeholder="请选择">
+            <el-option label="群众" value="p1"></el-option>
+            <el-option label="共青团员" value="p2"></el-option>
+            <el-option label="入党积极分子" value="p3"></el-option>
+            <el-option label="共产党员" value="p4"></el-option>
+            <el-option label="其他党派人士" value="p5"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="14">
+        <el-form-item label="电话号码" :label-width="formLabelWidth" >
+          <el-input v-model="form.telephone" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-form-item>
+    <el-form-item>
+      <el-col :span="8">
+        <el-form-item label="学院" :label-width="formLabelWidth">
+          <el-select v-model="form.department" placeholder="请选择">
+          <el-option
+            v-for="item in deptOptions"
+            :key="item.dpt"
+            :label="item.dpt"
+            :value="item.dpt">
+          </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="班级" :label-width="formLabelWidth">
+          <el-select v-model="form.classAndGrade" placeholder="请选择">
+          <el-option
+              v-for="item in deptOptions"
+              :key="item.dept"
+              :label="item.label"
+              :value="item.dept">
+              </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="状态" :label-width="formLabelWidth" >
+          <el-select v-model="form.status" placeholder="请选择">
+            <el-option label="毕业" value="Graduation"></el-option>
+            <el-option label="在校" value="AtSchool"></el-option>
+            <el-option label="休学" value="Suspended"></el-option>
+            <el-option label="退学" value="Dropped"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-form-item>
+  </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="addCourseData">提交</el-button>
@@ -148,14 +213,24 @@ import XLSX from 'xlsx'
         totalCount:1,
         loading:false,
 
-         dialogFormVisible: false,
-          form: {
+        dialogFormVisible: false,
+        form: {
+          no:'',
           name: '',
-          dept:'',
-          type: '',
+          sex:'',
+          graduate:'',
+          birth:'',
+          idCard: '',
           hours: '',
           credit: '',
+          political:'',
+          telephone:'',
+          department:'',
+          classAndGrade:'',
+          status:'',
+          pass:'',
         },
+        
         formLabelWidth: '80px'
       }
     },
